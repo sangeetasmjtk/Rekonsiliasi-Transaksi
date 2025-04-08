@@ -1,0 +1,36 @@
+from itertools import combinations
+
+def greedy_pairing_zero_sum(numbers, max_comb_size=6):
+    sorted_numbers = sorted(numbers, key=abs)
+    result = []
+    while sorted_numbers:
+        for size in range(2, max_comb_size + 1):
+            found_combination = False
+
+            for combo in combinations(sorted_numbers, size):
+                if sum(combo) == 0:
+                    result.append(combo)
+
+                    for num in combo:
+                        sorted_numbers.remove(num)
+                    found_combination = True
+                    break
+
+            if found_combination:
+                break
+
+        if not found_combination:
+            break
+
+    return result
+
+numbers = []
+
+zero_sum_combinations = greedy_pairing_zero_sum(numbers)
+
+if zero_sum_combinations:
+    print("Kombinasi yang hasilnya 0 dengan greedy pairing:")
+    for comb in zero_sum_combinations:
+        print(comb)
+else:
+    print("Tidak ada kombinasi yang hasilnya 0.")
